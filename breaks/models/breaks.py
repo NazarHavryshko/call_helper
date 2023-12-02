@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from breaks.models.dicts import BreakStatus
+from constants import BREAK_CREATED_STATUS
+
 User = get_user_model()
 
 
@@ -20,3 +23,8 @@ class Break(models.Model):
 
     def __str__(self):
         return f'Обід працівника {self.employees} ({self.pk})'
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.status = BreakStatus.objects.get(code=BREAK_CREATED_STATUS)
+        return super().save(*args, **kwargs)

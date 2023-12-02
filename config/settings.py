@@ -29,10 +29,12 @@ INSTALLED_APPS += [
     'django_filters',
     'corsheaders',
     'djoser',
+    'phonenumber_field',
 ]
 
 # apps
 INSTALLED_APPS += [
+    'users',
     'api',
     'common',
     'breaks',
@@ -89,7 +91,8 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
-
+AUTH_USER_MODEL = 'users.User'
+AUTHENTICATION_BACKENDS = ('users.backends.AuthBackend', )
 ##########################
 # DJANGO REST FRAMEWORK
 ##########################
@@ -130,7 +133,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 ##########################
 # LOCALIZATION
 ##########################
-LANGUAGE_CODE = "en-us"
+LANGUAGES = (
+    ('en', 'English'),
+    ('uk', 'Ukrainian'),
+)
+LANGUAGE_CODE = "uk"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
@@ -151,7 +158,6 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
 CSRF_COOKIE_SECURE = False
 
-
 ##########################
 #  DRF SPECTACULAR
 ##########################
@@ -169,7 +175,7 @@ SPECTACULAR_SETTINGS = {
         'rest_framework.authentication.BasicAuthentication',
     ],
 
-    'SWAGGER_UI_SETTINGS':    {
+    'SWAGGER_UI_SETTINGS': {
         'DeepLinking': True,
         'DisplayOperationId': True,
     },
