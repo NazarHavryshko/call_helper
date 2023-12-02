@@ -1,0 +1,22 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="str.table_id" />
+          <option value="str.pet_id" />
+          <option value="str.user_id" />
+          <option value="str.name" />
+          <option value="str.birthday" />
+          <option value="str.breed" />
+          <option value="str.photo" />
+          <option value="str.comments" />
+          <option value="str.gender" />
+          <option value="str.city" />
+          <option value="str.price" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

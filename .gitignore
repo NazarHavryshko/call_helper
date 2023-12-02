@@ -157,8 +157,9 @@ media/
 /media/
 */media/
 
-/api/migrations/
-*/migrations/
+
+*/migrations/*
+!*/migrations/__init__.py
 
 # Cython debug symbols
 cython_debug/
