@@ -29,12 +29,18 @@ class ProfileBreaksInline(admin.StackedInline):
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'director')
     inlines = (EmployeeInline, )
+    readonly_fields = (
+        'created_by', 'created_at', 'updated_by', 'updated_at'
+    )
 
 
 @admin.register(grups.Group)
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'manager',)
     inlines = (MemberInline, ProfileBreaksInline,)
+    readonly_fields = (
+        'created_by', 'created_at', 'updated_by', 'updated_at'
+    )
 
 
 @admin.register(dicts.Position)

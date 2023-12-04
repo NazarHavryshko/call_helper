@@ -2,10 +2,12 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
+from common.models.mixins import InfoMixin
+
 User = get_user_model()
 
 
-class Organization(models.Model):
+class Organization(InfoMixin):
     name = models.CharField('Назва', max_length=255)
     director = models.ForeignKey(User, models.RESTRICT, 'organizations_director',
                                  verbose_name='Директор')

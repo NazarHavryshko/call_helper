@@ -2,10 +2,12 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
+from common.models.mixins import InfoMixin
+
 User = get_user_model()
 
 
-class Group(models.Model):
+class Group(InfoMixin):
     organization = models.ForeignKey('Organization', models.CASCADE, 'groups',
                                      verbose_name='Організація')
     name = models.CharField('Назва', max_length=255)
