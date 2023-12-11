@@ -25,11 +25,12 @@ class RegistrationView(generics.CreateAPIView):
                        summary='Зміна паролю', tags=['Аутентифікація і Авторизація']),
 )
 class ChangePasswordView(APIView):
+    serializer_class = user_s.ChangePasswordSerializer
 
-    def post(self, requests):
-        user = requests.user
-        serializer = user_s.ChangePasswordSerializer(
-            instance=user, data=requests.data
+    def post(self, request):
+        user = request.user
+        serializer = self.serializer_class(
+            instance=user, data=request.data
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -39,7 +40,6 @@ class ChangePasswordView(APIView):
 
 @extend_schema_view(
     get=extend_schema(summary='Профіль користувача', tags=['Користувачі']),
-    put=extend_schema(summary='Змінити профіль користувача', tags=['Користувачі']),
     patch=extend_schema(summary='Змінити частично профіль користувача', tags=['Користувачі']),
 )
 class MeView(generics.RetrieveUpdateAPIView):
