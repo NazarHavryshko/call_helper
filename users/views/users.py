@@ -6,7 +6,10 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.views import APIView
 
+from common.views.mixins import ListViewSet
+from users.permissions import IsNotCorporate
 from users.serializars.api import users as user_s
+from users.serializars.api.users import UserSearchListSerializer
 
 User = get_user_model()
 
@@ -43,6 +46,7 @@ class ChangePasswordView(APIView):
     patch=extend_schema(summary='Змінити частично профіль користувача', tags=['Користувачі']),
 )
 class MeView(generics.RetrieveUpdateAPIView):
+    pagination_class = [IsNotCorporate]
     queryset = User.objects.all()
     http_method_names = ('get', 'patch')
 
@@ -54,3 +58,12 @@ class MeView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+@extend_schema_view(
+    list=extend_schema(summary='Список користувачів', tags=['Словники']),
+)
+class UserSearchListView(ListViewSet):
+    # Видалити з списку супер юзера
+    queryset = User.objects.exclude()
+    serializer_class = UserSearchListSerializer

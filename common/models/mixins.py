@@ -23,7 +23,7 @@ class BaseDictModelMixin(models.Model):
 
 class DateMixin(models.Model):
     """
-    Add info when data is created and updated in DataBase
+    Add info when data is created and updated in the database.
     """
     created_at = models.DateTimeField('Created at', null=True, blank=True)
     updated_at = models.DateTimeField('Updated at', null=True, blank=True)
@@ -63,6 +63,6 @@ class InfoMixin(DateMixin):
         if user and not user.pk:
             user = None
         if not self.pk:
-            self.created_at = user
-        self.updated_at = user
+            self.created_by = user
+        self.updated_by = user
         super().save(*args, **kwargs)

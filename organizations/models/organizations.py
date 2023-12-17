@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 from common.models.mixins import InfoMixin
+from organizations.constants import DIRECTOR_POSITION
 
 User = get_user_model()
 
@@ -25,6 +26,13 @@ class Organization(InfoMixin):
     def __str__(self):
         return f'{self.name} ({self.pk})'
 
+    @property
+    def director_employee(self):
+        obj, create = self.employees_info.get_or_create(
+            position_id=DIRECTOR_POSITION, default={'user': self.director, }
+        )
+        return obj
+
 
 class Employee(models.Model):
     organization = models.ForeignKey(
@@ -42,7 +50,7 @@ class Employee(models.Model):
         verbose_name = 'Працівник'
         verbose_name_plural = 'Працівники'
         ordering = ('-date_joined',)
-        unique_together = (('organization', 'user', ),)
+        unique_together = (('organization', 'user',),)
 
     def __str__(self):
-        return f'Employee {self.user}'
+        return f'Employee ({self.pk}) - {self.user}'

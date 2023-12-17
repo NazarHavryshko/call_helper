@@ -1,6 +1,6 @@
 from drf_spectacular.utils import extend_schema_view, extend_schema
 
-from common.serializars.mixins import DictMixinSerializer
+from common.serializers.mixins import DictMixinSerializer
 from common.views.mixins import DictListMixin
 from breaks.models import dicts
 

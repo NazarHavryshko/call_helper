@@ -4,7 +4,8 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
 
-from users.serializars.nested.profile import ProfileShortSerializer, ProfileUpdateSerializer
+from users.serializars.nested.profile import ProfileShortSerializer, \
+    ProfileUpdateSerializer
 
 User = get_user_model()
 
@@ -97,15 +98,25 @@ class MeUpdateSerializer(serializers.ModelSerializer):
             'date_joined',
         )
 
+    def validate(self, attrs):
+        user = self.instance
+        if user.is_corporate_account:
+            raise ParseError(
+
+            )
+        return attrs
+
     def update(self, instance, validated_data):
         # Перевірка існування профіля
-        profile_data = validated_data.pop('profile') if 'profile' in validated_data else None
+        profile_data = validated_data.pop(
+            'profile') if 'profile' in validated_data else None
 
         with transaction.atomic():
             instance = super().update(instance, validated_data)
 
             # Оновлення профілю
-            self._update_profile(instance.profile, profile_data)
+            if profile_data:
+                self._update_profile(instance.profile, profile_data)
 
         return instance
 
@@ -114,3 +125,13 @@ class MeUpdateSerializer(serializers.ModelSerializer):
             instance=profile, data=data, partial=True)
         profile_serializer.is_valid(raise_exception=True)
         profile_serializer.save()
+
+
+class UserSearchListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'full_name',
+        )

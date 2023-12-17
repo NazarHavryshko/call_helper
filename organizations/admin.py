@@ -14,7 +14,7 @@ class EmployeeInline(admin.TabularInline):
 
 class MemberInline(admin.TabularInline):
     model = grups.Member
-    fields = ('user', 'date_joined')
+    fields = ('employee', 'date_joined')
 
 
 class ProfileBreaksInline(admin.StackedInline):
