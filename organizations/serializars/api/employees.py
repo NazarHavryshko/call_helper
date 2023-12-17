@@ -59,7 +59,7 @@ class EmployeeCreateSerializer(ExtendedModelSerializer):
 
     def validate(self, attrs):
         organization_id = self.context['view'].kwargs.get('id')
-        organization = Organization.object.filter(
+        organization = Organization.objects.filter(
             id=organization_id,
             director=get_current_user()
         ).first()
@@ -95,7 +95,7 @@ class EmployeeCreateSerializer(ExtendedModelSerializer):
 class EmployeeUpdateSerializer(ExtendedModelSerializer):
     class Meta:
         model = Employee
-        fields = '__all__'
+        fields = ('position',)
 
 
 class EmployeeDestroySerializer(ExtendedModelSerializer):

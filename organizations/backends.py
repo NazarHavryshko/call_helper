@@ -12,7 +12,7 @@ class MyOrganization(BaseFilterBackend):
 
 class OwnByOrganization(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        org_id = request.parser_context['kwargs'].get('pk')
+        org_id = request.parser_context['kwargs'].get('id')
         if org_id is not None:
             return queryset.filter(organization_id=org_id)
         return queryset.none()
